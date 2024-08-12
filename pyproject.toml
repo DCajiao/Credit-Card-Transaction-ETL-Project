@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "credit card transactions project"
+version = "0.1.1"
+description = "This ETL (Extract, Transform, Load) project focuses on processing and analyzing a dataset of credit card transactions. The main objective is to convert raw data into valuable and actionable information for business decision-making."
+authors = ["Sebastian Ortiz, David Cajiao Lazt, Juan Andrés López"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+numpy = "^2.0.1"
+pandas = "^2.2.2"
+matplotlib = "^3.9.1.post1"
+sqlalchemy = "^2.0.32"
+python-dotenv = "^1.0.1"
+
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
