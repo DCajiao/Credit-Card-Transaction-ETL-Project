@@ -1,3 +1,56 @@
+# Python virtual environment
+venv/
+.env/
 *.env
-poetry.lock
+
+# Local testing
+test/
+
+
+# Environment configuration files and directories
 __pycache__/
+*.py[cod]
+*.so
+
+# Poetry configuration files
+poetry.lock
+
+# Jupyter Notebook files and directories
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Log files and databases
+*.log
+*.db
+
+# Output files
+*.out
+*.pdf
+*.png
+*.jpg
+*.jpeg
+
+# Temporary editor files
+*.swp
+*.swo
+*~
+.DS_Store
+
+# IDEs configuration files
+.vscode/
+
+# pytest configuration files
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Cache and temporary files
+.cache/
+*.tmp
+*.temp
+*.bak
+*.orig
+
+# Docker configuration files
+docker-compose.override.yml
+.env.docker
