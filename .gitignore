@@ -3,6 +3,9 @@ venv/
 .env/
 *.env
 
+# Data files
+data/
+
 # Local testing
 test/
 
