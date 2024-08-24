@@ -3,3 +3,7 @@ pandas
 matplotlib
 sqlalchemy
 python-dotenv
+jupyter
+ipykernel
+psycopg2
+seaborn
