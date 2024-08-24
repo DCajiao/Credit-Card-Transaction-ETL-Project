@@ -5,6 +5,7 @@ venv/
 
 # Data files
 data/
+seed_data.sql
 
 # Local testing
 test/
