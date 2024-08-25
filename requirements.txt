@@ -1,5 +1,9 @@
+ipykernel
+jupyter
+matplotlib
 numpy
 pandas
-matplotlib
-sqlalchemy
+psycopg2
 python-dotenv
+scipy
+seaborn
