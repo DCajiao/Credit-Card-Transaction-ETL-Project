@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS credit_card_transactions_clean (
+"id" INTEGER,
+"trans_date_trans_time" TIMESTAMP,
+"cc_num" TEXT,
+"merchant" TEXT,
+"category" TEXT,
+"amt" FLOAT,
+"first" TEXT,
+"last" TEXT,
+"gender" TEXT,
+"street" TEXT,
+"city" TEXT,
+"state" TEXT,
+"zip" INTEGER,
+"job" TEXT,
+"dob" TIMESTAMP,
+"trans_num" TEXT,
+"is_fraud" BOOLEAN,
+"merch_zipcode" FLOAT,
+"age" SMALLINT
+);
