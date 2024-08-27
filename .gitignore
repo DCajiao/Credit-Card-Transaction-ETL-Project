@@ -6,6 +6,7 @@ venv/
 # Data files
 data/
 seed_data.sql
+seed_data_clean.sql
 
 # Local testing
 test/
