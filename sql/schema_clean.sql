@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS credit_card_transactions_clean (
 "city" TEXT,
 "state" TEXT,
 "zip" INTEGER,
+"lat" FLOAT,
+"long" FLOAT,
 "job" TEXT,
 "dob" TIMESTAMP,
 "trans_num" TEXT,
