@@ -13,4 +13,4 @@
 
 ## 🔀 Branch Workflow Diagram
 
-![Branch Workflow Diagram](./docs/branch-workflow.svg)
+![Branch Workflow Diagram](./docs/Branch-workflow.svg)
