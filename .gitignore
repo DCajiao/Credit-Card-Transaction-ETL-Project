@@ -30,7 +30,6 @@ poetry.lock
 
 # Output files
 *.out
-*.pdf
 *.png
 *.jpg
 *.jpeg
