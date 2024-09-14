@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "credit-card-transaction-airflow-etl-project"
+version = "0.1.0"
+description = "This ETL (Extract, Transform, Load) project focuses on processing and analyzing a dataset of credit card transactions. The main objective is to convert raw data into valuable and actionable information for business decision-making."
+authors = ["Sebastian Ortiz, David Cajiao Lazt, Juan Andrés López"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+ipykernel = "^6.29.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
