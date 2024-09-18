@@ -4,7 +4,7 @@ WORKDIR /api
 
 COPY README.md /api
 COPY requirements.txt /api
-COPY src/ /app
+COPY src/ /api/
 
 RUN pip install --no-cache-dir -r requirements.txt
 
