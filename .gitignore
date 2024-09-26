@@ -11,6 +11,8 @@ seed_data_clean.sql
 # Local testing
 test/
 
+# MySQL Workbench configuration files
+*.bak
 
 # Environment configuration files and directories
 __pycache__/
@@ -28,11 +30,6 @@ poetry.lock
 *.log
 *.db
 
-# Output files
-*.out
-*.png
-*.jpg
-*.jpeg
 
 # Temporary editor files
 *.swp

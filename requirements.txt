@@ -1,0 +1,8 @@
+ipykernel 
+numpy
+pandas
+psycopg2
+requests 
+scipy 
+seaborn 
+python-dotenv

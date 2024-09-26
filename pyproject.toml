@@ -8,6 +8,13 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.12"
 ipykernel = "^6.29.5"
+numpy = "^2.1.1"
+pandas = "^2.2.3"
+psycopg2 = "^2.9.9"
+requests = "^2.32.3"
+scipy = "^1.14.1"
+seaborn = "^0.13.2"
+python-dotenv = "^1.0.1"
 
 
 [build-system]

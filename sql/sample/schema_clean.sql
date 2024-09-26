@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS dataraw_testing_table (
+"id" INTEGER,
+"trans_date_trans_time" TEXT,
+"cc_num" BIGINT,
+"merchant" TEXT,
+"category" TEXT,
+"amt" FLOAT,
+"first" TEXT,
+"last" TEXT,
+"gender" TEXT,
+"street" TEXT,
+"city" TEXT,
+"state" TEXT,
+"zip" INTEGER,
+"lat" FLOAT,
+"long" FLOAT,
+"job" TEXT,
+"dob" TEXT,
+"trans_num" TEXT,
+"is_fraud" BOOLEAN,
+"merch_zipcode" FLOAT,
+"age" SMALLINT
+);
