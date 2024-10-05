@@ -2,14 +2,22 @@
 venv/
 .env/
 *.env
+credentials.pem
 
 # Data files
 data/
-seed_data.sql
-seed_data_clean.sql
+*seed_data.sql
 
 # Local testing
 test/
+
+# Airflow folders
+logs/
+config/
+plugins/
+
+# PEM file generator
+pem/
 
 # MySQL Workbench configuration files
 *.bak

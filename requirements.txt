@@ -1,8 +1,7 @@
-ipykernel 
 numpy
 pandas
-psycopg2
-requests 
-scipy 
-seaborn 
+requests
+scipy
+seaborn
 python-dotenv
+us

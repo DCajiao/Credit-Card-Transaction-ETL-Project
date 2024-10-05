@@ -75,6 +75,7 @@ The fact table contains numerical data and foreign keys needed to analyze transa
    - **Fields:**
      - `state_PK`: (INT) Primary key for the state.
      - `state_name`: (VARCHAR) State name.
+     - `population`: (INT) Country population.
 
 8. **`city` Dimension**  
    The `city` table stores information about the city where the transaction occurred.
@@ -87,7 +88,6 @@ The fact table contains numerical data and foreign keys needed to analyze transa
    - **Fields:**
      - `country_code_PK`: (VARCHAR) Primary key for the country.
      - `name`: (VARCHAR) Country name.
-     - `population`: (INT) Country population.
 
 ### Snowflake Schema ❄️
 
