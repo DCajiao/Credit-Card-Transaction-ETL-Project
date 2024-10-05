@@ -3,7 +3,7 @@ import numpy as np
 import logging
 import os
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
+logging.basicConfig(level=logging.INFO)
 
 
 class SQLSchemaGenerator:

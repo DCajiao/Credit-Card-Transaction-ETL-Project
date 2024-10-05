@@ -2,10 +2,35 @@ import psycopg2
 import logging
 import pandas as pd
 
-from utils.credentials_management import get_database_credentials
+import sys
+import os
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
+# Add the 'src' folder to sys.path
+sys.path.append(os.path.abspath(os.path.join('..', 'src')))
 
+from src.utils.credentials_management import get_database_credentials
+
+logging.basicConfig(level=logging.INFO)
+
+
+def create_db_connection():
+    """
+    Creates a connection to the PostgreSQL database using the provided credentials.
+
+    Returns:
+        psycopg2.extensions.connection: A connection to the PostgreSQL database.
+
+    Raises:
+        Exception: If an error occurs while attempting to connect to the database.
+    """
+    try:
+        db = DB()
+        logging.info("✔ Database connection created")
+        return db.execute_with_query("SELECT * FROM raw_table;", fetch_results=True)
+    except Exception as e:
+        logging.error(f"✖ Error connecting to database: {e}")
+        #raise
+        return False
 
 class DB:
     """
@@ -163,7 +188,7 @@ class DB:
         finally:
             self.close()
 
-    def fetch_as_dataframe(self, query_path):
+    def fetch_as_dataframe(self, query):
         """
         Executes a SQL query from a file and returns the results as a Pandas DataFrame.
 
@@ -177,8 +202,6 @@ class DB:
             Exception: If an error occurs during query execution or DataFrame creation.
         """
         try:
-            with open(query_path, 'r') as file:
-                query = file.read()
             self.connect()
             self.cursor.execute(query)
             rows = self.cursor.fetchall()
@@ -188,6 +211,26 @@ class DB:
             return df
         except Exception as e:
             logging.error(f"✖ Error loading data into DataFrame: {e}")
+            raise
+        finally:
+            self.close()
+
+    def execute_with_query(self, query, fetch_results=True):
+        try:
+            self.connect()
+            self.cursor.execute(query)
+            self.conn.commit()
+            logging.info("✔ Query executed")
+
+            if fetch_results:
+                rows = self.cursor.fetchall()
+                colnames = [desc[0] for desc in self.cursor.description]
+                df = pd.DataFrame(rows, columns=colnames)
+                return df
+            return None
+        except Exception as e:
+            logging.error(f"✖ Error executing query: {e}")
+            self.conn.rollback()
             raise
         finally:
             self.close()
