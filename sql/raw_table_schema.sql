@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS dataraw_testing_table (
+CREATE TABLE IF NOT EXISTS raw_table (
 "id" INTEGER,
 "trans_date_trans_time" TEXT,
 "cc_num" BIGINT,
