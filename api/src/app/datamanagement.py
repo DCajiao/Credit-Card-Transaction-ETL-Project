@@ -3,9 +3,14 @@ import pandas as pd
 
 class DataManagement:
     def __init__(self):
-        self.df = pd.read_csv('./data/world_population.csv')
+        self.df_world = pd.read_csv('./data/world_population.csv')
+        self.df_states = pd.read_csv('./data/usa_states_population.csv')
 
-    def get_all_the_df(self):
+    def get_all_the_df(self,data_id):
+        if data_id == 'world_population':
+            return self.df_world
+        elif data_id == 'states_population':
+            return self.df_states
         return self.df
 
     def get_countries(self):

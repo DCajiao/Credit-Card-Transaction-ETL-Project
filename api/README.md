@@ -67,6 +67,17 @@ api/
      ```
    - Status Code: `200 OK` (if the filter is successful) or `400 Bad Request` (if parameters are missing or there's an error in the query).
 
+5. **GET `/api/v1/data/population_by_usa_states`**
+   - Description: Gets the population for each US state.
+   - Response: Returns the data in JSON format.
+     ```json
+     {
+       "<column_name>": { ... }
+     }
+     ```
+   - Status Code: `200 OK`
+
+
 ### Example Usage
 
 To fetch all available data, you can make an HTTP GET request:

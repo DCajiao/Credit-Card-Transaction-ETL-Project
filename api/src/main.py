@@ -1,5 +1,4 @@
 import logging
-import json
 
 from flask import Flask, request, jsonify
 
@@ -25,7 +24,7 @@ def documentation():
 @app.route('/api/v1/data/', methods=['GET'])
 def get_all_data():
     logging.info("All data requested")
-    return jsonify(datafunctions.get_all_the_df().to_dict())
+    return jsonify(datafunctions.get_all_the_df('world_population').to_dict())
 
 
 @app.route('/api/v1/data/available_countries', methods=['GET'])
@@ -68,6 +67,11 @@ def get_by_range_of_years():
     logging.info("Data requested for years range: %d-%d", start_year, end_year)
     response = datafunctions.get_by_range_of_years(start_year, end_year)
     return jsonify(response), 200 if "error" not in response else 404
+
+@app.route('/api/v1/data/usa/states', methods=['GET'])
+def get_all_states():
+    logging.info("Data requested for USA states")
+    return jsonify(datafunctions.get_all_the_df('states_population').to_dict())
 
 #########################################################
 if __name__ == '__main__':
