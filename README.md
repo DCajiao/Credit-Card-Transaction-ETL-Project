@@ -96,4 +96,4 @@ Unlike the **Star Schema**, the **Snowflake Schema** normalizes some of the dime
 
 ### Airflow Execution 
 
-![execution](docs/evidences/execution.gif)
+[Watch a video of the execution here](docs/evidences/execution.mp4)
