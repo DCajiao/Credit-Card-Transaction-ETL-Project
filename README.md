@@ -93,4 +93,7 @@ The fact table contains numerical data and foreign keys needed to analyze transa
 
 Unlike the **Star Schema**, the **Snowflake Schema** normalizes some of the dimension tables into smaller related tables. In this model, the **location** dimension is normalized into **state**, **city**, and **country** tables, which reduces data redundancy but may require more joins in queries.
 
----
+
+### Airflow Execution 
+
+![execution](docs/evidences/execution.gif)
