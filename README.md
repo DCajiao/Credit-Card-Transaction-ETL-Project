@@ -199,6 +199,14 @@ Credit-Card-Transaction-ETL-Project/
 ├── config/                      # Configuration files for database and environment settings
 └── docker-compose.yml           # Docker Compose file for service orchestration
 ```
+## Final Dashboard 📊:
+Take a look at the dashboard with your preferred option: 
+
+[Offline (PDF)](reports/dashboard/002_ETL-Credit-Card-Transaction-Dashboard.pdf)
+
+[Online](https://lookerstudio.google.com/reporting/b6d54cef-c15d-4174-83c1-a78a3e0ca405)
+
+
 
 ## How to Use 📊
 
