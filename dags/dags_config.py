@@ -69,9 +69,17 @@ upload_queries = PythonOperator(
     dag=dag
 )
 
+sent_info_dashboard = PythonOperator(
+    task_id='sent_info_dashboard',
+    python_callable=extract.get_sample_clean_data,
+    provide_context=True,
+    dag=dag
+)
+
 # Set the task dependencies
 api_connection >> merge_data
 db_connection >> merge_data
 merge_data >> dimensional_model
 dimensional_model >> create_queries
 create_queries >> upload_queries
+upload_queries >> sent_info_dashboard

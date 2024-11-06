@@ -5,3 +5,5 @@ scipy
 seaborn
 python-dotenv
 us
+kafka-python-ng
+six
