@@ -112,7 +112,7 @@ services:
       #KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
 
       KAFKA_LISTENERS: 'PLAINTEXT://:9092'
-      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://localhost:9092'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://127.0.0.1:9092'
       ALLOW_PLAINTEXT_LISTENER: yes
     ports:
       - "9092:9092" # port to use to connect from kafka broker to local host port

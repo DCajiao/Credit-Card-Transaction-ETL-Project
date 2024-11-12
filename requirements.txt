@@ -7,3 +7,5 @@ python-dotenv
 us
 kafka-python-ng
 six
+ipykernel
+psycopg2
