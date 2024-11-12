@@ -234,3 +234,24 @@ class DB:
             raise
         finally:
             self.close()
+
+    def execute_insert(self, insert_query, values):
+        """
+        Executes the insert query with the provided values.
+
+        Args:
+            insert_query (str): The SQL insert query string.
+            values (tuple): The values to be inserted into the database.
+        """
+        try:
+            self.connect()
+            self.cursor.execute(insert_query, values)
+            self.conn.commit()
+            logging.info("✔ Record inserted successfully")
+        except Exception as e:
+            logging.error(f"✖ Error executing insert: {e}")
+            self.conn.rollback()
+            raise
+        finally:
+            self.close()
+

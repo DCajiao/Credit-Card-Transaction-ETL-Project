@@ -6,7 +6,7 @@ from datetime import  timedelta
 import extract_functions as extract 
 import transform_functions as transform
 import load_functions as load
-
+from src.utils.kafka import kafka_consumer
 
 # Set the default arguments for the DAG
 default_args = {
@@ -28,7 +28,7 @@ dag = DAG(
     schedule_interval='@daily',
     tags=['project']
 )
-
+"""
 api_connection = PythonOperator(
     task_id='api_get',
     python_callable=extract.get_api_data,
@@ -68,7 +68,7 @@ upload_queries = PythonOperator(
     provide_context=True,
     dag=dag
 )
-
+"""
 sent_info_dashboard = PythonOperator(
     task_id='sent_info_dashboard',
     python_callable=extract.get_sample_clean_data,
@@ -77,9 +77,11 @@ sent_info_dashboard = PythonOperator(
 )
 
 # Set the task dependencies
+"""
 api_connection >> merge_data
 db_connection >> merge_data
 merge_data >> dimensional_model
 dimensional_model >> create_queries
 create_queries >> upload_queries
-upload_queries >> sent_info_dashboard
+upload_queries >> sent_info_dashboard"""
+sent_info_dashboard

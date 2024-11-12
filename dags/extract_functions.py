@@ -69,8 +69,8 @@ def get_sample_clean_data():
     """
     try:
         db = DB()
-        result = db.execute_with_query("SELECT is_fraud FROM fact_T_transation_dim LIMIT 100;", fetch_results=True)
-        df = pd.DataFrame(result, columns=["is_fraud"])  # Ensure this matches the data structure
+        result = db.execute_with_query("SELECT * FROM raw_table LIMIT 500000;", fetch_results=True)
+        df = pd.DataFrame(result)  # Ensure this matches the data structure
         logging.info("✔ Successfully got sample data from database and sent to Power BI")
         for index, row in df.iterrows():
             kafka_producer(row)
