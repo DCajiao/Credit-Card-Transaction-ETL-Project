@@ -53,7 +53,7 @@ def get_db_data():
     except Exception as e:
         logging.error(f"✖ Error getting data from database: {e}")
         return None
-    
+
 def get_sample_clean_data():
     """
     Retrieves a sample of cleaned data from a database and returns it as a DataFrame.
@@ -71,10 +71,19 @@ def get_sample_clean_data():
         db = DB()
         result = db.execute_with_query("SELECT * FROM raw_table LIMIT 500000;", fetch_results=True)
         df = pd.DataFrame(result)  # Ensure this matches the data structure
-        logging.info(f"✔ Successfully got sample data from database: {df.shape[0]} rows")
+        logging.info("✔ Successfully got sample data from database")
         for row in df.iterrows():
+            row = row[1]
             kafka_producer(row)
+            logging.info("✔ Successfully sent data to Kafka")
             time.sleep(1)
+            
+        for row in df.iterrows():
+            # Cargar el df como dict
+            row = row[1]
+            print(row)
+            #convertir a dict
+            kafka_producer(row)
 
     except Exception as e:
         logging.error(f"✖ Error getting sample data from database: {e}")

@@ -105,5 +105,4 @@ def upload_queries_to_db(**kwargs):
     
     db.close()
     logging.info("✔ Successfully uploaded queries to database")
-    logging.info("✔ ETL pipeline completed")
     return None

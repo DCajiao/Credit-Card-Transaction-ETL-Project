@@ -1,23 +1,31 @@
 from json import dumps, loads
 from kafka import KafkaProducer, KafkaConsumer
 import pandas as pd
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 from src.connections.db import DB
 db = DB()
+
+
 def kafka_producer(row):
     """
     This function sends a message to a Kafka topic.
     Every message is a row from a DataFrame converted to a dictionary with encoding utf-8.
     Kafka-dashboard it's the channel to send the messages.
     """
+
     producer = KafkaProducer(
         value_serializer=lambda m: dumps(m).encode('utf-8'),
-        bootstrap_servers=['localhost:9092'],
+        bootstrap_servers=['127.0.0.1:9092'],
     )
 
     message = row.to_dict()
+
     producer.send('kafka-dashboard', value=message)
-    print("Message sent")
+    logging.info(f"Message sent: {message}")
+
 
 def kafka_consumer():
     """
@@ -41,8 +49,9 @@ def kafka_consumer():
 
     # Consuming messages and inserting them into the database
     for message in consumer:
-        print(f"Received message: {message.value}")  # Print the consumed message
-        df = pd.json_normalize(data=message.value)  # Convert the message to a DataFrame
+        logging.info(f"Received message: {message.value}")
+        # Convert the message to a DataFrame
+        df = pd.json_normalize(data=message.value)
 
         # Insert each row into the database using the execute_insert method
         for _, row in df.iterrows():
@@ -53,11 +62,11 @@ def kafka_consumer():
                 row["long"], row["job"], row["dob"], row["trans_num"], row["is_fraud"],
                 row["merch_zipcode"], row["age"]
             )
-            
+
             # Ejecutar la inserción usando la función execute_insert
             try:
                 db.execute_insert(insert_query, values)
-                print(f"Inserted row into the database: {row['id']}")
+                logging.info(f"Inserted row into the database: {row['id']}")
             except Exception as e:
-                print(f"Error inserting row: {e}")
+                logging.error(f"Error inserting row: {e}")
                 continue  # Si hay un error, continuar con el siguiente registro
