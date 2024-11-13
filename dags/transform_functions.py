@@ -30,7 +30,7 @@ def merge_data(**kwargs):
     
     df_api.columns = [col.lower() for col in df_api.columns.to_list()]
     df_merged = df_db.merge(df_api, left_on='state', right_on='state_abbreviation', how='left')
-    logging.info(f"Merged data from API and DB. Shape: {df_merged.shape}")
+    logging.info(f"🪄 Merged data from API and DB. Shape: {df_merged.shape}")
     
     return df_merged
 
@@ -74,8 +74,7 @@ def dimensional_model(**kwargs):
     df['trans_date_trans_time'] = pd.to_datetime(df['trans_date_trans_time'])
     df['trans_date_id'] = df['trans_date_trans_time'].dt.strftime('%Y%m%d').astype(int)
     df['state_id'] = df['state_abbreviation'].apply(get_fips_from_usps)
-    logging.info(f"")
-
+    
     # Map categories and jobs to unique IDs
     df['category_id'] = df['category'].factorize()[0]
     df['job_id'] = df['job'].factorize()[0] + 1010

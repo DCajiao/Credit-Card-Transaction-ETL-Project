@@ -6,7 +6,7 @@ from datetime import  timedelta
 import extract_functions as extract 
 import transform_functions as transform
 import load_functions as load
-
+from src.utils.kafka import kafka_consumer
 
 # Set the default arguments for the DAG
 default_args = {
@@ -25,7 +25,6 @@ dag = DAG(
     'ETL-pipeline-credit_card_transactions',
     default_args=default_args,
     description='DAG to process credit card transactions',
-    schedule_interval='@daily',
     tags=['project']
 )
 
@@ -69,9 +68,25 @@ upload_queries = PythonOperator(
     dag=dag
 )
 
+stream_producer = PythonOperator(
+    task_id='stream_producer',
+    python_callable=extract.get_sample_clean_data,
+    provide_context=True,
+    dag=dag
+)
+
+stream_consumer = PythonOperator(
+    task_id='stream_consumer',
+    python_callable=load.consumer_execution,
+    dag=dag
+)
+
 # Set the task dependencies
+
 api_connection >> merge_data
 db_connection >> merge_data
 merge_data >> dimensional_model
 dimensional_model >> create_queries
 create_queries >> upload_queries
+upload_queries >> stream_consumer
+upload_queries >> stream_producer
