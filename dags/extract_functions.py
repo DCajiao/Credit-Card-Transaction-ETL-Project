@@ -26,7 +26,7 @@ def get_api_data():
         response = requests.get(API_URL)
         data = response.json()
         df = pd.DataFrame(data)
-        logging.info("✔ Successfully got data from API")
+        logging.info("🪄✔ Successfully got data from API")
         return df
     except Exception as e:
         logging.error(f"✖ Error getting data from API: {e}")
@@ -48,7 +48,7 @@ def get_db_data():
     try:
         db = DB()
         df = db.execute_with_query("SELECT * FROM raw_table LIMIT 500000;", fetch_results=True)
-        logging.info("✔ Successfully got data from database")
+        logging.info("🪄✔ Successfully got data from database")
         return df
     except Exception as e:
         logging.error(f"✖ Error getting data from database: {e}")
@@ -69,21 +69,15 @@ def get_sample_clean_data():
     """
     try:
         db = DB()
-        result = db.execute_with_query("SELECT * FROM raw_table LIMIT 500000;", fetch_results=True)
+        result = db.execute_with_query("SELECT * FROM raw_table LIMIT 1000;", fetch_results=True)
         df = pd.DataFrame(result)  # Ensure this matches the data structure
-        logging.info("✔ Successfully got sample data from database")
+        logging.info("🪄✔ Successfully got sample data from database")
         for row in df.iterrows():
+            logging.info(f"Sending data to Kafka. Row: {row[1]['id']}")
             row = row[1]
             kafka_producer(row)
-            logging.info("✔ Successfully sent data to Kafka")
-            time.sleep(1)
-            
-        for row in df.iterrows():
-            # Cargar el df como dict
-            row = row[1]
-            print(row)
-            #convertir a dict
-            kafka_producer(row)
+            logging.info("🪄✔ Successfully sent data to Kafka")
+            time.sleep(10)
 
     except Exception as e:
         logging.error(f"✖ Error getting sample data from database: {e}")

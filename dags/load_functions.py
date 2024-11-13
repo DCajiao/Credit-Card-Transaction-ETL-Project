@@ -5,7 +5,7 @@ import os
 
 from src.connections.db import DB
 from src.utils.pysqlschema import SQLSchemaGenerator
-
+from src.utils.kafka import kafka_consumer
 
 logging.basicConfig(level=logging.INFO)
 
@@ -55,6 +55,17 @@ def create_sql_queries(**kwargs):
     
     os.makedirs('sql', exist_ok=True)
 
+    tables_to_clean = ['category_dim', 'client_dim', 'date_dim', 'fact_t_transation_dim', 'job_dim', 'location_dim', 'merchant_dim']
+    try:
+        for table in tables_to_clean:
+            logging.info(f"🪄Cleaning table {table}")
+            query = f"DELETE FROM {table};"
+            db = DB()
+            db.execute_with_query(query, fetch_results=False)
+            logging.info(f"✔ Table {table} cleaned")
+    except Exception as e:
+        logging.error(f"✖ Error cleaning tables: {e}")
+
     queries_list = []
 
     for table_name, df in dfs_dict.items():
@@ -73,9 +84,9 @@ def create_sql_queries(**kwargs):
         generator.generate_schema(df, schema_file_path)
         generator.generate_seed_data(df, seed_data_file_path)
 
-        logging.info(f"Files generated for {table_name}:")
-        logging.info(f" - Schema: {schema_file_path}")
-        logging.info(f" - Seed data: {seed_data_file_path}")
+        logging.info(f"🪄Files generated for {table_name}:")
+        logging.info(f"🪄 - Schema: {schema_file_path}")
+        logging.info(f"🪄 - Seed data: {seed_data_file_path}")
     
     return queries_list
 
@@ -104,5 +115,19 @@ def upload_queries_to_db(**kwargs):
         logging.info(f"✔ Successfully uploaded {query_file} to database")
     
     db.close()
-    logging.info("✔ Successfully uploaded queries to database")
+    logging.info("🪄 Successfully uploaded queries to database")
+    return None
+
+def consumer_execution():
+    """
+    Consumes messages from a Kafka topic and inserts them into a PostgreSQL database.
+    """
+    try:
+        # Eliminar todos los registros de la tabla data_streaming
+        db = DB()
+        db.execute_with_query("DELETE FROM data_streaming;", fetch_results=False)
+        kafka_consumer()
+
+    except Exception as e:
+        logging.error(f"✖ Error consuming messages from Kafka: {e}")  
     return None

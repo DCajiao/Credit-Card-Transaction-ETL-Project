@@ -25,10 +25,9 @@ dag = DAG(
     'ETL-pipeline-credit_card_transactions',
     default_args=default_args,
     description='DAG to process credit card transactions',
-    schedule_interval='@daily',
     tags=['project']
 )
-"""
+
 api_connection = PythonOperator(
     task_id='api_get',
     python_callable=extract.get_api_data,
@@ -68,20 +67,26 @@ upload_queries = PythonOperator(
     provide_context=True,
     dag=dag
 )
-"""
-sent_info_dashboard = PythonOperator(
-    task_id='sent_info_dashboard',
+
+stream_producer = PythonOperator(
+    task_id='stream_producer',
     python_callable=extract.get_sample_clean_data,
     provide_context=True,
     dag=dag
 )
 
+stream_consumer = PythonOperator(
+    task_id='stream_consumer',
+    python_callable=load.consumer_execution,
+    dag=dag
+)
+
 # Set the task dependencies
-"""
+
 api_connection >> merge_data
 db_connection >> merge_data
 merge_data >> dimensional_model
 dimensional_model >> create_queries
 create_queries >> upload_queries
-upload_queries >> sent_info_dashboard"""
-sent_info_dashboard
+upload_queries >> stream_consumer
+upload_queries >> stream_producer
