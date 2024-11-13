@@ -16,27 +16,29 @@ def kafka_producer(row):
     Kafka-dashboard it's the channel to send the messages.
     """
 
+    logging.info("Connecting to Kafka producer")
     producer = KafkaProducer(
         value_serializer=lambda m: dumps(m).encode('utf-8'),
-        bootstrap_servers=['127.0.0.1:9092'],
+        bootstrap_servers=['kafka-test:9092'],
     )
 
     message = row.to_dict()
 
     producer.send('kafka-dashboard', value=message)
-    logging.info(f"Message sent: {message}")
+    logging.info(f"🪄 Message sent: {message}")
 
 
 def kafka_consumer():
     """
     This function consumes messages from a Kafka topic and inserts them into a PostgreSQL database.
     """
+    logging.info("🪄Connecting to Kafka consumer")
     consumer = KafkaConsumer(
         'kafka-dashboard',  # Topic name
         enable_auto_commit=True,
         group_id='my-group-1',
         value_deserializer=lambda m: loads(m.decode('utf-8')),  # Deserialize messages to JSON
-        bootstrap_servers=['localhost:9092']
+        bootstrap_servers=['kafka-test:9092']
     )
     # SQL query for insertion
     insert_query = """
@@ -49,7 +51,7 @@ def kafka_consumer():
 
     # Consuming messages and inserting them into the database
     for message in consumer:
-        logging.info(f"Received message: {message.value}")
+        logging.info(f"🪄Received message: {message.value}")
         # Convert the message to a DataFrame
         df = pd.json_normalize(data=message.value)
 
@@ -66,7 +68,8 @@ def kafka_consumer():
             # Ejecutar la inserción usando la función execute_insert
             try:
                 db.execute_insert(insert_query, values)
-                logging.info(f"Inserted row into the database: {row['id']}")
+                logging.info(f"🪄Inserted row into the database: {row['id']}")
             except Exception as e:
                 logging.error(f"Error inserting row: {e}")
                 continue  # Si hay un error, continuar con el siguiente registro
+    logging.info("✔ Successfully consumed messages from Kafka and inserted them into the database")
