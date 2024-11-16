@@ -2,6 +2,8 @@
 
 A comprehensive ETL pipeline to process and analyze credit card transactions using Apache Airflow, Docker, and PostgreSQL. This project automates data extraction from APIs and databases, data transformation to build dimensional models, and data loading into a database for analysis, supporting a scalable and efficient ETL process.
 
+![Project Diagram](./docs/img/Project_diagram.png)
+
 ## Project Overview 🎯
 
 The Credit Card Transaction ETL project orchestrates a data pipeline that extracts, transforms, and loads transaction data into a relational database. Designed to handle large volumes of credit card transactions, it uses Airflow for scheduling, Docker for containerization, and PostgreSQL for data storage, enabling seamless data management, analysis, and insights.
@@ -148,8 +150,23 @@ Follow these instructions to set up and run the project locally.
    cd Credit-Card-Transaction-ETL-Project
    ```
 
-2. **Environment Setup**:
+2. **Create the .env file:
+   Create a .env file in the ./src/ directory with the following content:
+
+   ```bash
+   DBNAME = your_name_db_on_render
+   DBUSER = your_user
+   DBPASS = your_password
+   DBHOST = your_host_on_render
+   DBPORT = 5432 (optional) you can change it.
+   ```
+
+3. **Environment Setup**:
    The project is Dockerized. Run the following command to build and start the containers:
+   ```bash
+   docker-compose up airflow-init
+   ```
+
    ```bash
    docker-compose up --build
    ```
@@ -168,7 +185,7 @@ The pipeline uses PostgreSQL as the main data warehouse. `docker-compose.yml` in
 ## ETL Pipeline in Airflow 💡
 
 ### DAG Workflow
-![Dimensional Model Diagram](./docs/evidences/AirflowDag.jpg)
+![Dimensional Model Diagram](./docs/evidences/kafka_DAG.png)
 The ETL pipeline consists of three main tasks orchestrated by Airflow:
 1. **API Data Extraction (`api_get`)**: Retrieves data from an external API.
 2. **Database Data Extraction (`db_get`)**: Fetches data from a database.
