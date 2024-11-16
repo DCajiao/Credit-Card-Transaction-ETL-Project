@@ -2,6 +2,8 @@
 
 A comprehensive ETL pipeline to process and analyze credit card transactions using Apache Airflow, Docker, and PostgreSQL. This project automates data extraction from APIs and databases, data transformation to build dimensional models, and data loading into a database for analysis, supporting a scalable and efficient ETL process.
 
+![Project Diagram](./docs/img/Project_diagram.png)
+
 ## Project Overview 🎯
 
 The Credit Card Transaction ETL project orchestrates a data pipeline that extracts, transforms, and loads transaction data into a relational database. Designed to handle large volumes of credit card transactions, it uses Airflow for scheduling, Docker for containerization, and PostgreSQL for data storage, enabling seamless data management, analysis, and insights.
@@ -31,88 +33,8 @@ The Credit Card Transaction ETL project orchestrates a data pipeline that extrac
 
 This dimensional model is designed to analyze transactions, including fraud information, clients, locations, merchants, and more. The model follows a **Snowflake Schema**, with the `location` dimension being normalized into separate tables for `city`, `state`, and `country`.
 
-### Fact Table: `fact_table_transaction`
-The fact table contains numerical data and foreign keys needed to analyze transactions.
-
-- **Fields:**
-  - `trans_num_PK`: (TEXT) Primary key that identifies each transaction.
-  - `is_fraud`: (TINYINT) Indicates whether the transaction was fraudulent.
-  - `amt`: (DECIMAL) Transaction amount.
-  - `hour`: (TIME) Time of the transaction.
-  - `date_FK`: (INT) Foreign key referencing the `date` table.
-  - `client_cc_num_FK`: (INT) Foreign key referencing the `client` table.
-  - `location_PK`: (INT) Foreign key referencing the `location` table.
-  - `merchant_PK`: (INT) Foreign key referencing the `merchant` table.
-
-### Dimension Tables
-
-1. **`date` Dimension**  
-   The `date` table stores date and time information for the transactions.
-   - **Fields:**
-     - `date_PK`: (INT) Primary key for the date.
-     - `date`: (DATETIME) Full date and time.
-     - `month`: (VARCHAR) Transaction month.
-     - `year`: (YEAR) Transaction year.
-
-2. **`client` Dimension**  
-   The `client` table stores details about the client associated with each transaction.
-   - **Fields:**
-     - `client_cc_num_PK`: (INT) Client’s primary key.
-     - `firstname`: (VARCHAR) Client’s first name.
-     - `lastname`: (VARCHAR) Client’s last name.
-     - `gender`: (VARCHAR) Client’s gender.
-     - `age`: (INT) Client’s age.
-     - `job_FK`: (INT) Foreign key referencing the `job` table.
-
-3. **`location` Dimension**  
-   The `location` table stores information about where the transaction occurred and is normalized into separate tables for `city`, `state`, and `country`.
-   - **Fields:**
-     - `location_PK`: (INT) Primary key for the location.
-     - `street`: (VARCHAR) Street address where the transaction took place.
-     - `lat`: (DECIMAL) Latitude of the location.
-     - `long`: (DECIMAL) Longitude of the location.
-     - `zipcode`: (INT) Zip code.
-     - `state_FK`: (INT) Foreign key referencing the `state` table.
-     - `city_FK`: (INT) Foreign key referencing the `city` table.
-     - `country_code_FK`: (VARCHAR) Foreign key referencing the `country` table.
-
-4. **`merchant` Dimension**  
-   The `merchant` table stores details about the merchant involved in each transaction.
-   - **Fields:**
-     - `merchant_PK`: (INT) Merchant’s primary key.
-     - `merchant_name`: (VARCHAR) Merchant’s name.
-     - `category_FK`: (INT) Foreign key referencing the `category` table.
-
-5. **`category` Dimension**  
-   The `category` table stores the categories of the merchants.
-   - **Fields:**
-     - `category_PK`: (INT) Primary key for the category.
-     - `category_name`: (VARCHAR) Category name.
-
-6. **`job` Dimension**  
-   The `job` table stores the occupation or job of the client.
-   - **Fields:**
-     - `job_PK`: (INT) Primary key for the job.
-     - `job_name`: (VARCHAR) Job title.
-
-7. **`state` Dimension**  
-   The `state` table stores information about the state/province where the transaction occurred.
-   - **Fields:**
-     - `state_PK`: (INT) Primary key for the state.
-     - `state_name`: (VARCHAR) State name.
-     - `population`: (INT) Country population.
-
-8. **`city` Dimension**  
-   The `city` table stores information about the city where the transaction occurred.
-   - **Fields:**
-     - `city_PK`: (INT) Primary key for the city.
-     - `city_name`: (VARCHAR) City name.
-
-9. **`country` Dimension**  
-   The `country` table stores information about the country where the transaction occurred.
-   - **Fields:**
-     - `country_code_PK`: (VARCHAR) Primary key for the country.
-     - `name`: (VARCHAR) Country name.
+To get more information about Database Fields, look at: 
+[Documentation](https://github.com/DCajiao/Credit-Card-Transaction-ETL-Project/tree/feature/kafka/docs/Documentation.pdf)
 
 ### Snowflake Schema ❄️
 
@@ -148,8 +70,23 @@ Follow these instructions to set up and run the project locally.
    cd Credit-Card-Transaction-ETL-Project
    ```
 
-2. **Environment Setup**:
+2. **Create the .env file**:
+   Create a .env file in the ./src/ directory with the following content:
+
+   ```bash
+   DBNAME = your_name_db_on_render
+   DBUSER = your_user
+   DBPASS = your_password
+   DBHOST = your_host_on_render
+   DBPORT = 5432 (optional) you can change it.
+   ```
+
+3. **Environment Setup**:
    The project is Dockerized. Run the following command to build and start the containers:
+   ```bash
+   docker-compose up airflow-init
+   ```
+
    ```bash
    docker-compose up --build
    ```
@@ -168,7 +105,7 @@ The pipeline uses PostgreSQL as the main data warehouse. `docker-compose.yml` in
 ## ETL Pipeline in Airflow 💡
 
 ### DAG Workflow
-![Dimensional Model Diagram](./docs/evidences/AirflowDag.jpg)
+![Dimensional Model Diagram](./docs/evidences/kafka_DAG.png)
 The ETL pipeline consists of three main tasks orchestrated by Airflow:
 1. **API Data Extraction (`api_get`)**: Retrieves data from an external API.
 2. **Database Data Extraction (`db_get`)**: Fetches data from a database.
