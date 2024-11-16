@@ -150,7 +150,7 @@ Follow these instructions to set up and run the project locally.
    cd Credit-Card-Transaction-ETL-Project
    ```
 
-2. **Create the .env file:
+2. **Create the .env file**:
    Create a .env file in the ./src/ directory with the following content:
 
    ```bash
