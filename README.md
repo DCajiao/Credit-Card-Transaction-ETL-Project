@@ -33,7 +33,8 @@ The Credit Card Transaction ETL project orchestrates a data pipeline that extrac
 
 This dimensional model is designed to analyze transactions, including fraud information, clients, locations, merchants, and more. The model follows a **Snowflake Schema**, with the `location` dimension being normalized into separate tables for `city`, `state`, and `country`.
 
-To get more information about Database Fields, look at: https://github.com/DCajiao/Credit-Card-Transaction-ETL-Project/tree/feature/kafka/docs/Documentation.pdf
+To get more information about Database Fields, look at: 
+[Documentation](https://github.com/DCajiao/Credit-Card-Transaction-ETL-Project/tree/feature/kafka/docs/Documentation.pdf)
 
 ### Snowflake Schema ❄️
 
